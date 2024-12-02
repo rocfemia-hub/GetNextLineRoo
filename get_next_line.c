@@ -6,28 +6,38 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:09 by roo               #+#    #+#             */
-/*   Updated: 2024/12/02 16:16:18 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/02 19:59:09 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *ft_find_n(char *buffer)
+char *ft_find_line(char *buffer)
 {
     int i;
-    char *str;
+    char *line;
+    int line_len;
 
+    if (ft_strchr(buffer, '\n'))
+        line_len = ft_strchr(buffer, '\n') - buffer + 1;
+    else
+        line_len = ft_strchr(buffer, '\0') - buffer;
+    line = malloc(line_len * sizeof(char));
+    if (!line)
+        return (free(line), NULL);
     i = 0;
     while (buffer[i] != '\n')
     {
-        str[i] = buffer[i];
+        line[i] = buffer[i];
         i++;
     }
     if (buffer[i] == '\n')
-        str[i] == '\n';
-    else if
-        return (NULL);
-    return (str);
+    {
+        line[i] = buffer[i];
+        i++;
+    }
+    line[i] == '\0';
+    return (line);
 }
 void ft_free_free(char *matrix)
 {
@@ -46,17 +56,20 @@ char *get_next_line(int fd)
     static char *buffer;
     char *temp_buffer;
     char *line;
-    ssize_t readed;
+    ssize_t read;
     
     if (fd < 0 || BUFFER_SIZE <= 0)
     {
         return (NULL);
     }
-    readed = 1;
-    while (readed > 0)
+    temp_buffer = (char *)malloc(BUFFER_SIZE + 1)
+    if(!temp_buffer)
+        return(free(temp_buffer), NULL);
+    read = 1;
+    while (read > 0)
     {
-        readed = read(fd, temp_buffer, BUFFER_SIZE);
-        if (readed < 0)
+        read = read(fd, temp_buffer, BUFFER_SIZE);
+        if (read < 0)
         {
             return(free(temp_buffer), free(buffer), NULL);
         }
@@ -67,9 +80,13 @@ char *get_next_line(int fd)
             return(free(temp_buffer), NULL);
         }
     }
-    line = ft_find_n(buffer);
+    line = ft_find_line(buffer);
     return (line);
 }
 #include <stdio.h>
 int main()
-{}
+{
+    int fd = open("pipa.txt", O_RDONLY);
+    get_next_line(fd);
+    return(0);
+}
