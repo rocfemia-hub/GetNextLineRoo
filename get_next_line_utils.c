@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:05 by roo               #+#    #+#             */
-/*   Updated: 2024/12/02 19:24:42 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/02 20:18:24 by rocfemia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -27,7 +29,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	int		s3_len;
 	char	*s3;
 
-    i = 0;
+	i = 0;
 	j = 0;
 	s3_len = ft_strlen(s1) + ft_strlen(s2);
 	s3 = malloc(s3_len * sizeof(char) + 1);
