@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:09 by roo               #+#    #+#             */
-/*   Updated: 2024/12/02 20:18:05 by rocfemia         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:05:25 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,39 @@ char	*get_next_line(int fd)
 	}
 	temp_buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!temp_buffer)
-		return (free(temp_buffer), NULL);
+		return (NULL);
 	readed = 1;
 	while (readed > 0)
 	{
-		readed = read(fd, temp_buffer, BUFFER_SIZE);
-		if (readed < 0)
-			return (free(temp_buffer), free(buffer), NULL);
-		temp_buffer[BUFFER_SIZE] = '\0';
-		buffer = ft_strjoin(buffer, temp_buffer);
 		if (!buffer)
-			return (free(temp_buffer), NULL);
+		{
+			buffer = (char *)malloc(BUFFER_SIZE + 1);
+			if (!buffer)
+				return (NULL);
+			readed = read(fd, buffer, BUFFER_SIZE);
+		}
+		else
+			readed = read(fd, temp_buffer, BUFFER_SIZE);
+			if (readed <= 0)
+				break;
+			buffer = ft_strjoin(buffer, temp_buffer);
+			write(1, buffer, ft_strlen(buffer));
+			if (!buffer)
+				return (free(temp_buffer), NULL);
 	}
 	line = ft_find_line(buffer);
-	return (line);
+	return (free(temp_buffer), line);
 }
-/*#include <stdio.h>
+#include <stdio.h>
 int	main(void)
 {
+    char *line;
 	int fd = open("pipa.txt", O_RDONLY);
-	get_next_line(fd);
+	while((line = get_next_line(fd)))
+    {
+        //printf("%s", line);
+        free(line);
+    }
+    close(fd);
 	return (0);
-}*/
+}

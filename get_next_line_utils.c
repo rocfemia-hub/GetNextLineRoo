@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:05 by roo               #+#    #+#             */
-/*   Updated: 2024/12/02 20:18:24 by rocfemia         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:56:25 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, const char *s2)
 {
 	int		i;
 	int		j;
@@ -47,7 +47,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		j++;
 	}
 	s3[i] = '\0';
-	return (s3);
+	return (free(s1), s3);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -66,4 +66,30 @@ char	*ft_strchr(const char *s, int c)
 	if (s[i] == (char)c)
 		return ((char *)&s[i]);
 	return (NULL);
+}
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*result;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (start > ft_strlen(s))
+	{
+		result = malloc(sizeof(char) * (1));
+		if (!result)
+			return (NULL);
+		result[0] = '\0';
+		return (result);
+	}
+	if (ft_strlen(s) - start < len)
+		len = ft_strlen(s) - start;
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	while (start < ft_strlen(s) && i < len && s[start])
+		result[i++] = s[start++];
+	result[i] = '\0';
+	return (result);
 }
