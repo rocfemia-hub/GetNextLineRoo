@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 15:27:09 by roo               #+#    #+#             */
-/*   Updated: 2024/12/03 18:05:25 by roo              ###   ########.fr       */
+/*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
+/*   Updated: 2024/12/10 14:48:33 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,50 +42,71 @@ char	*ft_find_line(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*temp_buffer;
-	char		*line;
-	ssize_t		readed;
+    static char *buffer;
+    char        *temp_buffer;
+    char        *line;
+    ssize_t     readed;
+    unsigned int    aux;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+    if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		return (NULL);
 	}
-	temp_buffer = (char *)malloc(BUFFER_SIZE + 1);
-	if (!temp_buffer)
-		return (NULL);
-	readed = 1;
-	while (readed > 0)
-	{
-		if (!buffer)
-		{
-			buffer = (char *)malloc(BUFFER_SIZE + 1);
-			if (!buffer)
-				return (NULL);
-			readed = read(fd, buffer, BUFFER_SIZE);
-		}
-		else
-			readed = read(fd, temp_buffer, BUFFER_SIZE);
-			if (readed <= 0)
-				break;
-			buffer = ft_strjoin(buffer, temp_buffer);
-			write(1, buffer, ft_strlen(buffer));
-			if (!buffer)
-				return (free(temp_buffer), NULL);
-	}
-	line = ft_find_line(buffer);
-	return (free(temp_buffer), line);
+    buffer = ft_calloc(1, BUFFER_SIZE + 1);
+    readed = 1;
+    while (readed > 0)
+    {
+        temp_buffer = ft_calloc(1, BUFFER_SIZE + 1);
+        readed = read(fd, temp_buffer, BUFFER_SIZE);
+        if (readed <= 0)
+            break;
+        buffer = ft_strjoin(buffer, temp_buffer);
+        free(temp_buffer);
+    }
+    line = ft_find_line(buffer);
+    aux = ft_strlen(line);
+    buffer = ft_substr(buffer, aux, ft_strlen(buffer));
+    printf("%s\n", buffer);
+    return(line);
 }
-#include <stdio.h>
-int	main(void)
+/*int main(void)
+{
+    char *buffer;
+    int fd = open("patata.txt", O_RDONLY);
+    buffer = get_next_line(fd);
+    printf("%s\n", buffer);
+    close(fd);
+    free(buffer);
+    return(0);
+}*/
+/*int main(void)
 {
     char *line;
-	int fd = open("pipa.txt", O_RDONLY);
+	int fd = open("patata.txt", O_RDONLY);
 	while((line = get_next_line(fd)))
     {
-        //printf("%s", line);
+        printf("%s", line);
         free(line);
     }
     close(fd);
 	return (0);
+}*/
+#include <fcntl.h>
+int main(void)
+{
+    char *line;
+    int fd = open("patata.txt", O_RDONLY);
+    line = get_next_line(fd);
+    while (line != NULL)
+    {
+        printf("%s", line);
+        free(line);
+    }
+    close(fd);
+    return(0);
+    
+    //printf("%s", get_next_line(fd));
+    //printf("%s", get_next_line(fd));
+    /* printf("%s", get_next_line(fd));
+    printf("%s", get_next_line(fd)); */
 }
