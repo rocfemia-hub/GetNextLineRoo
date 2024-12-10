@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/10 14:48:33 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/10 18:59:08 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*ft_find_line(char *buffer)
 		line_len = ft_strchr(buffer, '\n') - buffer + 1;
 	else
 		line_len = ft_strchr(buffer, '\0') - buffer;
-	line = malloc(line_len * sizeof(char));
+	line = malloc(line_len * sizeof(char) + 1);
 	if (!line)
 		return (free(line), NULL);
 	i = 0;
-	while (buffer[i] != '\n')
+	while (buffer[i] != '\n' && buffer[i] != '\0')
 	{
 		line[i] = buffer[i];
 		i++;
@@ -42,10 +42,10 @@ char	*ft_find_line(char *buffer)
 
 char	*get_next_line(int fd)
 {
-    static char *buffer;
-    char        *temp_buffer;
-    char        *line;
-    ssize_t     readed;
+    static char     *buffer;
+    char            *temp_buffer;
+    char            *line;
+    ssize_t         readed;
     unsigned int    aux;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
@@ -54,7 +54,7 @@ char	*get_next_line(int fd)
 	}
     buffer = ft_calloc(1, BUFFER_SIZE + 1);
     readed = 1;
-    while (readed > 0)
+    while (readed > 0 && (!ft_strchr(buffer, '\n')))
     {
         temp_buffer = ft_calloc(1, BUFFER_SIZE + 1);
         readed = read(fd, temp_buffer, BUFFER_SIZE);
@@ -66,33 +66,12 @@ char	*get_next_line(int fd)
     line = ft_find_line(buffer);
     aux = ft_strlen(line);
     buffer = ft_substr(buffer, aux, ft_strlen(buffer));
-    printf("%s\n", buffer);
+    //printf("%s", buffer);
     return(line);
 }
-/*int main(void)
-{
-    char *buffer;
-    int fd = open("patata.txt", O_RDONLY);
-    buffer = get_next_line(fd);
-    printf("%s\n", buffer);
-    close(fd);
-    free(buffer);
-    return(0);
-}*/
-/*int main(void)
-{
-    char *line;
-	int fd = open("patata.txt", O_RDONLY);
-	while((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-	return (0);
-}*/
+
 #include <fcntl.h>
-int main(void)
+/* int main(void)
 {
     char *line;
     int fd = open("patata.txt", O_RDONLY);
@@ -104,9 +83,36 @@ int main(void)
     }
     close(fd);
     return(0);
+} */
+int	main (void)
+{
+ 	char file[] = "./patata.txt";
+ 	int a;
+ 	char *str;
+/* 
+ 	a = open(file, O_RDONLY);
+
+ 	if (BUFFER_SIZE > 100) {
+ 		char *temp;
+ 		do {
+ 			temp = get_next_line(a);
+
+ 			free(temp);
+ 		} while (temp != NULL);
+ 	}
+
+ 	close(a); */
+ 	a = open(file, O_RDONLY);
+
+ 	while((str = get_next_line(a)) != NULL)
+ 	{
+ 		printf("%s", str);
+ 		free(str);
+ 	}
+ 	free(str);
     
-    //printf("%s", get_next_line(fd));
-    //printf("%s", get_next_line(fd));
-    /* printf("%s", get_next_line(fd));
-    printf("%s", get_next_line(fd)); */
+ 	// printf("%s\n", get_next_line(a));
+ 	// printf("%s", get_next_line(a));
+ 	close(a);
+	return (0);
 }
