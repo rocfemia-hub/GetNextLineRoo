@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:05 by roo               #+#    #+#             */
-/*   Updated: 2024/12/10 14:54:07 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/11 01:30:21 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,31 +89,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		i++;
 	}
 	return (ptr);
-}
-
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*result;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (start > ft_strlen(s))
-	{
-		result = malloc(sizeof(char) * (1));
-		if (!result)
-			return (NULL);
-		result[0] = '\0';
-		return (result);
-	}
-	if (ft_strlen(s) - start < len)
-		len = ft_strlen(s) - start;
-	result = malloc(sizeof(char) * (len + 1));
-	if (!result)
-		return (NULL);
-	while (start < ft_strlen(s) && i < len && s[start])
-		result[i++] = s[start++];
-	result[i] = '\0';
-	return (result);
 }
