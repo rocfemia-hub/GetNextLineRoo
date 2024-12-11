@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/11 01:22:01 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/11 02:45:29 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*ft_find_line(char *buffer)
 	else
 		line_len = line_len + ft_strchr(buffer, '\0') - buffer;
 	line = ft_calloc(1, BUFFER_SIZE + 1);
+	if (line == NULL)
+		return(NULL);
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 	{
@@ -55,10 +57,14 @@ char	*get_next_line(int fd)
 	if (buffer == NULL)
 	{
     	buffer = ft_calloc(1, BUFFER_SIZE + 1);
+		if(buffer == NULL)
+			return(NULL);
 	}
     while (readed > 0)
     {
         temp_buffer = ft_calloc(1, BUFFER_SIZE + 1);
+		if(temp_buffer == NULL)
+			return(NULL);
         readed = read(fd, temp_buffer, BUFFER_SIZE);
         buffer = ft_strjoin(buffer, temp_buffer);
         free(temp_buffer);
@@ -78,6 +84,8 @@ int	main (void)
  	while((str = get_next_line(a)) != NULL)
  	{
  		printf("%s", str);
+		if (!str)
+			return (0);
  		free(str);
  	}
  	free(str);
