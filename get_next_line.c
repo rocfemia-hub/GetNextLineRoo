@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/11 03:53:14 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/11 04:53:16 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*get_next_line(int fd)
     return(line);
 }
 
-#include <fcntl.h>
 int	main (void)
 {
  	char file[] = "./patata.txt";
