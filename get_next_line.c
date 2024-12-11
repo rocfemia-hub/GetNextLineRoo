@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/11 02:45:29 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/11 03:53:14 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ char	*ft_find_line(char *buffer)
 		i++;
 	}
 	if (buffer[i] == '\n')
-	{
-		line[i] = buffer[i];
-		i++;
-	}
+		line[i++] = buffer[i];
 	line[i] = '\0';
 	return (line);
 }
@@ -51,15 +48,11 @@ char	*get_next_line(int fd)
     static ssize_t	readed = 1;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
-	{
 		return (NULL);
-	}
 	if (buffer == NULL)
-	{
     	buffer = ft_calloc(1, BUFFER_SIZE + 1);
-		if(buffer == NULL)
-			return(NULL);
-	}
+	if (buffer == NULL)
+		return(NULL);
     while (readed > 0)
     {
         temp_buffer = ft_calloc(1, BUFFER_SIZE + 1);
@@ -70,6 +63,8 @@ char	*get_next_line(int fd)
         free(temp_buffer);
     }
     line = ft_find_line(buffer);
+	if(readed == 0 && line == NULL)
+		free(buffer);
     return(line);
 }
 
