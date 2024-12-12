@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 20:27:04 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 21:11:36 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_find_line(char *buffer)
 	if (ft_strchr(buffer, '\n'))
 		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\n') - buffer + 2);
 	else
-		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\0') - buffer + 2);
+		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\0') - buffer + 1);
 	if (line == NULL)
 		return(NULL);
 	i = 0;
@@ -63,27 +63,29 @@ char	*get_next_line(int fd)
     {
         temp_buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 		if(temp_buffer == NULL)
-			return(NULL); //free buffer??
+			return(free(buffer), NULL);
         readed = read(fd, temp_buffer, BUFFER_SIZE);
         buffer = ft_strjoin(buffer, temp_buffer);
         free(temp_buffer);
     }
     line = ft_find_line(buffer);
-	if(readed == -1 && line == NULL && !buffer)
-		free(buffer);
+	if((readed == -1 && line == NULL && !buffer) || (readed == 0 && !line && buffer))
+		return(free(buffer), buffer = NULL, line);
     return(line);
 }
 
-/*int	main (void)
+/* int	main (int argc, char **argv)
 {
- 	char file[] = "./patata.txt";
  	int a;
  	char *str;
- 	a = open(file, O_RDONLY);
+
+	if (argc < 2)
+		return (1);
+ 	a = open(argv[1], O_RDONLY);
 
  	while((str = get_next_line(a)) != NULL)
  	{
- 		printf("%s", str);
+ 		printf("[%s]", str);
 		if (!str)
 			return (0);
  		free(str);
@@ -91,4 +93,4 @@ char	*get_next_line(int fd)
  	free(str);
  	close(a);
 	return (0);
-}*/
+} */

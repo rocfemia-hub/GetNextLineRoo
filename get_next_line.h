@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:26:57 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 18:41:45 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 20:30:36 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 17
+#  define BUFFER_SIZE 42
 # endif
 # include <fcntl.h>
 # include <stdlib.h>
