@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:26:57 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 22:12:52 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 22:28:33 by rocfemia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@
 # include <unistd.h>
 
 char	*ft_find_line(char *buffer);
-char    *ft_create_line(char *buffer, char *line);
+char	*ft_create_line(char *buffer, char *line);
 char	*get_next_line(int fd);
-
 
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char *s1, const char *s2);

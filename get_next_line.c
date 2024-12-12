@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 22:20:21 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 22:34:54 by rocfemia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*ft_find_line(char *buffer)
 	return (line);
 }
 
-char    *ft_create_line(char *buffer, char *line)
+char	*ft_create_line(char *buffer, char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i] != '\0')
@@ -50,7 +50,7 @@ char    *ft_create_line(char *buffer, char *line)
 		i++;
 	}
 	line[i] = '\0';
-	return(line);
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -82,22 +82,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* #include <fcntl.h>
+/*#include <fcntl.h>
 int	main (void)
 {
- 	char file[] = "./patata.txt";
- 	int a;
- 	char *str;
- 	a = open(file, O_RDONLY);
+	char file[] = "./patata.txt";
+	int a;
+	char *str;
+	a = open(file, O_RDONLY);
 
- 	while((str = get_next_line(a)) != NULL)
- 	{
- 		printf("%s", str);
+	while((str = get_next_line(a)) != NULL)
+	{
+		printf("%s", str);
 		if (!str)
 			return (0);
- 		free(str);
- 	}
- 	free(str);
- 	close(a);
+		free(str);
+	}
+	free(str);
+	close(a);
 	return (0);
-} */
+}*/
