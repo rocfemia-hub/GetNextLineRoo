@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:27:05 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 18:54:35 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 22:07:42 by rocfemia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 	s3[i] = '\0';
 	return (free(s1), s3);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	int	i;
@@ -66,6 +67,7 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)&s[i]);
 	return (NULL);
 }
+
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void			*ptr;
