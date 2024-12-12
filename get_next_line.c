@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rocfemia <rocfemia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/12 22:06:11 by rocfemia         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:20:21 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	*ft_find_line(char *buffer)
 {
-	int			i;
 	char		*line;
 	static int	line_len = 0;
 
@@ -31,6 +30,14 @@ char	*ft_find_line(char *buffer)
 		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\0') - buffer + 1);
 	if (line == NULL)
 		return (NULL);
+	ft_create_line(buffer, line);
+	return (line);
+}
+
+char    *ft_create_line(char *buffer, char *line)
+{
+	int i;
+
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 	{
@@ -43,7 +50,7 @@ char	*ft_find_line(char *buffer)
 		i++;
 	}
 	line[i] = '\0';
-	return (line);
+	return(line);
 }
 
 char	*get_next_line(int fd)
@@ -75,23 +82,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* int	main (int argc, char **argv)
+/* #include <fcntl.h>
+int	main (void)
 {
-	int a;
-	char *str;
+ 	char file[] = "./patata.txt";
+ 	int a;
+ 	char *str;
+ 	a = open(file, O_RDONLY);
 
-	if (argc < 2)
-		return (1);
-	a = open(argv[1], O_RDONLY);
-
-	while((str = get_next_line(a)) != NULL)
-	{
-		printf("[%s]", str);
+ 	while((str = get_next_line(a)) != NULL)
+ 	{
+ 		printf("%s", str);
 		if (!str)
 			return (0);
-		free(str);
-	}
-	free(str);
-	close(a);
+ 		free(str);
+ 	}
+ 	free(str);
+ 	close(a);
 	return (0);
 } */
