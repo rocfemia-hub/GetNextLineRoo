@@ -6,7 +6,7 @@
 /*   By: roo <roo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:56:42 by roo               #+#    #+#             */
-/*   Updated: 2024/12/11 04:53:16 by roo              ###   ########.fr       */
+/*   Updated: 2024/12/12 20:27:04 by roo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ char	*ft_find_line(char *buffer)
 	static int	line_len = 0;
 
 	buffer = buffer + line_len;
-	if (buffer[0] == '\0')
+	if (!buffer || buffer[0] == '\0')
 		return(NULL);
 	if (ft_strchr(buffer, '\n'))
 		line_len = line_len + ft_strchr(buffer, '\n') - buffer + 1;
 	else
 		line_len = line_len + ft_strchr(buffer, '\0') - buffer;
-	line = ft_calloc(1, BUFFER_SIZE + 1);
+	if (ft_strchr(buffer, '\n'))
+		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\n') - buffer + 2);
+	else
+		line = ft_calloc(sizeof(char), ft_strchr(buffer, '\0') - buffer + 2);
 	if (line == NULL)
 		return(NULL);
 	i = 0;
@@ -35,7 +38,10 @@ char	*ft_find_line(char *buffer)
 		i++;
 	}
 	if (buffer[i] == '\n')
-		line[i++] = buffer[i];
+	{
+		line[i] = buffer[i];
+		i++;
+	}
 	line[i] = '\0';
 	return (line);
 }
@@ -50,25 +56,25 @@ char	*get_next_line(int fd)
     if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (buffer == NULL)
-    	buffer = ft_calloc(1, BUFFER_SIZE + 1);
+    	buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (buffer == NULL)
 		return(NULL);
     while (readed > 0)
     {
-        temp_buffer = ft_calloc(1, BUFFER_SIZE + 1);
+        temp_buffer = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
 		if(temp_buffer == NULL)
-			return(NULL);
+			return(NULL); //free buffer??
         readed = read(fd, temp_buffer, BUFFER_SIZE);
         buffer = ft_strjoin(buffer, temp_buffer);
         free(temp_buffer);
     }
     line = ft_find_line(buffer);
-	if(readed == 0 && line == NULL)
+	if(readed == -1 && line == NULL && !buffer)
 		free(buffer);
     return(line);
 }
 
-int	main (void)
+/*int	main (void)
 {
  	char file[] = "./patata.txt";
  	int a;
@@ -85,4 +91,4 @@ int	main (void)
  	free(str);
  	close(a);
 	return (0);
-}
+}*/
